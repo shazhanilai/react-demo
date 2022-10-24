@@ -10,6 +10,7 @@ import {userInfoSlice} from "./user/slice";
 import {persistReducer, persistStore} from "redux-persist"
 import storage from "redux-persist/lib/storage"
 import {shoppingCart} from "./shoppingCart/slice";
+import {orderSlice} from "./order/slice";
 const persistConfig = {
     key: 'root',
     storage,
@@ -21,7 +22,8 @@ const RootReducer = combineReducers({
     productDetail: productDetailSlice.reducer,
     productSearch: productSearchSlice.reducer,
     userInfo: userInfoSlice.reducer,
-    shoppingCart: shoppingCart.reducer
+    shoppingCart: shoppingCart.reducer,
+    order: orderSlice.reducer
 })
 // const store = createStore(RootReducer,applyMiddleware(thunk, actionLog))
 const persistedReducer = persistReducer(persistConfig, RootReducer)

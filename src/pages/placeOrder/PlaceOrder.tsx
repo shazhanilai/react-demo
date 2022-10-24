@@ -1,9 +1,15 @@
 import React from "react"
 import {MainLayout} from "../../layouts/mainLayout";
 import {Row, Col} from "antd";
-import {PaymentForm} from "../../commponents";
+import {PaymentForm, CheckOutCard} from "../../commponents";
+import {useSelector, useAppDispatch} from "../../redux/hooks";
+import {placeOrder} from "../../redux/order/slice";
 
 export const PlaceOrderPage: React.FC = (props) => {
+    const jwt = useSelector((s) => s.userInfo.token) as string
+    const loading = useSelector((s)=> s.order.loading)
+    const order = useSelector((s)=> s.order.currentOrder)
+    const dispatch = useAppDispatch()
     return (
         <MainLayout>
             <Row>
@@ -11,7 +17,9 @@ export const PlaceOrderPage: React.FC = (props) => {
                     <PaymentForm />
                 </Col>
                 <Col span={12}>
-                    test
+                    <CheckOutCard loading={loading} order={order} onCheckout={() => {
+                        dispatch(placeOrder({jwt, orderId: order.id}))
+                    }} />
                 </Col>
             </Row>
         </MainLayout>
